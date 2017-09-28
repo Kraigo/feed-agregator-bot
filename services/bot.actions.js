@@ -55,8 +55,8 @@ function forwardPost(post) {
     const postId = post.chat.id;
     const messageId = post.message_id;
 
-    Subscription.find({username: username}).then(data => {
-        data.reduce((queque, sub) =>
+    return Subscription.find({username: username}).then(data => {
+        return data.reduce((queque, sub) =>
             queque = queque.then(() => 
                 bot.forwardMessage(sub.chatId, postId, messageId)
             )

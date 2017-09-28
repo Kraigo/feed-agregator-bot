@@ -2,6 +2,7 @@ const appRoot = require('app-root-path');
 const bot = require(appRoot + '/config/bot');
 const Subscription = require(appRoot + '/models/Subscription');
 const Chat = require(appRoot + '/models/Chat');
+const Channel = require(appRoot + '/models/Channel');
 const botActions = require(appRoot + '/services/bot.actions');
 
 
@@ -54,4 +55,9 @@ bot.on('message', (msg) => {
 
 bot.on('channel_post', (post) => {
     botActions.forwardPost(post);
+    Channel.findOneAndUpdate(
+        {username: post.chat.username}, 
+        {username: post.chat.username, lastMessage: new Date()},
+        {upsert: true, new: true, setDefaultsOnInsert: true},
+        function() {})
 })
