@@ -49,7 +49,7 @@ bot.on('message', (msg) => {
                         return botActions.unsubscribe(chatId, usernameInChat);
                 }
             }).then(() => {
-                Chat.findOneAndUpdate({chatId: chatId}, {$set: {action: ''}});
+                Chat.findOneAndUpdate({chatId: chatId}, {action: null}).exec();
             })
         }
     }
@@ -60,6 +60,6 @@ bot.on('channel_post', (post) => {
     Channel.findOneAndUpdate(
         {username: post.chat.username}, 
         {username: post.chat.username, lastMessage: new Date()},
-        {upsert: true, new: true, setDefaultsOnInsert: true},
-        function() {})
+        {upsert: true, new: true, setDefaultsOnInsert: true})
+        .exec();
 })
