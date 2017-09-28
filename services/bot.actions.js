@@ -30,7 +30,7 @@ function subscribe(chatId, username) {
 function unsubscribe(chatId, username) {
     return Subscription.find({chatId, username})
         .then(data => {
-            if (data.length) {
+            if (!data.length) {
                 bot.sendMessage(chatId, 'You are not subscribed')
             } else {
                 Subscription.findOneAndRemove({
