@@ -17,9 +17,9 @@ app.get('/', function(req, res) {
     res.send('App is working');
 })
 
-app.get('/channel', function(req, res) {
-    Channel.find({}).count().then(function(data) {
-        res.send(`Forwarded from ${data} channels`);
+app.get('/channels', function(req, res) {
+    Channel.find({}).then(function(data) {
+        res.json({channels: data.map(c => c.username)})
     })
 })
 
