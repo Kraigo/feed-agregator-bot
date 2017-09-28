@@ -43,8 +43,10 @@ bot.on('message', (msg) => {
         if (usernameInChat) {
             Chat.findOne({chatId: chatId}).then((data) => {
                 switch(data.action) {
-                    case 'subscribe': return subscribe(chatId, usernameInChat);
-                    case 'unsubscribe': return unsubscribe(chatId, usernameInChat);
+                    case 'subscribe':
+                        return botActions.subscribe(chatId, usernameInChat);
+                    case 'unsubscribe':
+                        return botActions.unsubscribe(chatId, usernameInChat);
                 }
             }).then(() => {
                 Chat.findOneAndUpdate({chatId: chatId}, {$set: {action: ''}});
