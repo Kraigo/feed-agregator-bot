@@ -12,6 +12,10 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.get('/', function(res, req) {
+    res.send('App is working');
+})
+
 app.post(`/bot${process.env.TELEGRAM_BOT_TOKEN}`, (req, res) => {
     bot.processUpdate(req.body);
     res.sendStatus(200);
