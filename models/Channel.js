@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
     username: String,
-    lastMessage: Date
+    lastMessage: Date,
+    title: String,
+    inviteLink: String
 });
 
 

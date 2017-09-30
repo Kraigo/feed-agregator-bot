@@ -59,7 +59,12 @@ bot.on('channel_post', (post) => {
     botActions.forwardPost(post);
     Channel.findOneAndUpdate(
         {username: post.chat.username}, 
-        {username: post.chat.username, lastMessage: new Date()},
+        {
+            username: post.chat.username,
+            lastMessage: new Date(),
+            title: post.chat.title,
+            inviteLink: post.chat.invite_link
+        },
         {upsert: true, new: true, setDefaultsOnInsert: true})
         .exec();
 })

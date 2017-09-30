@@ -6,6 +6,7 @@ const bot = require('./config/bot');
 const botHandler = require('./services/bot.handler');
 const botActions = require('./services/bot.actions');
 const Channel = require('./models/Channel');
+const Subscription = require('./models/Subscription');
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -19,8 +20,16 @@ app.get('/', function(req, res) {
 
 app.get('/channels', function(req, res) {
     Channel.find({}).then(function(data) {
-        res.json({channels: data.map(c => c.username)})
-    })
+        res.json({
+            total: data.length,
+            channels: data.map(c => {return {username: c.username, title: c.title}})
+        });
+    });
+})
+app.get('/subscriptions', function(req, res) {
+    Subscription.find({}).count().then(data => {
+        res.json({ total: data });
+    });
 })
 
 app.post(`/bot${process.env.TELEGRAM_BOT_TOKEN}`, (req, res) => {
